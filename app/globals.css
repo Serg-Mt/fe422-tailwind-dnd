@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 :root {
   --background: #ffffff;
@@ -20,7 +21,16 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  /* background: var(--background);
+  color: var(--foreground); */
   font-family: Arial, Helvetica, sans-serif;
+}
+
+
+.orange-button {
+  @apply m-2 bg-orange-500 hover:bg-orange-600 active:bg-orange-400 px-2 rounded-full shadow-md text-white
+}
+
+.responsive-size {
+  @apply w-20 sm:w-25 md:w-30 lg:w-35 xl:w-40
 }
