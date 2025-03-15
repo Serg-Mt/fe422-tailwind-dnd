@@ -11,28 +11,26 @@ export function DnDRoot() {
 const
   num_zone = 3,
   num_draggable = 3,
-  glob_draggables = Array.from({ length: num_draggable },
-    (_, i) => <Draggable key={i} label={i} />);
+  glob_elems = [11, 22, 33]
 
 function Main() {
   let k = 0;
   const
     // [zones] = useState(Array.from({length: num}, (_, i) => <DropZone key={i}/>)),
-    [draggables, setDragables] = useState(Array.from({ length: num_zone },
-      (_, i) => Array.from({ length: 2 - i },
-        (_, j) => glob_draggables[k++]))),
-    moveTo = (label, index) => {
-      const elem = glob_draggables[+label];
-      console.log('moveTo', { label, index, elem });
-      setDragables(draggables.map((zone, i) =>
-        i === index ? [...zone, elem] : zone.filter(e => e !== elem)));
-    };
-  return <div
+    [boxes, setBoxes] = useState([[...glob_elems], [], []]);
 
+  moveTo = (label, index) => {
+    const elem = +label;
+    console.log('moveTo', { label, index });
+    setBoxes(b => b.map((zone, i) =>
+      i === index ? [...zone, elem] : zone.filter(e => e !== elem)));
+  };
+
+  return <div
     className="flex gap-2" >
-    <DropZone index={0} draggables={draggables[0]} moveTo={moveTo} />
-    <DropZone index={1} draggables={draggables[1]} moveTo={moveTo} />
-    <DropZone index={2} draggables={draggables[2]} moveTo={moveTo} />
+    <DropZone index={0} draggables={boxes[0]} moveTo={moveTo} />
+    <DropZone index={1} draggables={boxes[1]} moveTo={moveTo} />
+    <DropZone index={2} draggables={boxes[2]} moveTo={moveTo} />
   </div >
 }
 
@@ -48,7 +46,7 @@ function DropZone({ index, draggables, moveTo }) {
     }}
     className="bg-sky-500 m-2 p-2 min-h-40 ">
     <legend className="bg-white">Drop Zone</legend>
-    {draggables}
+    {draggables.map(id => <Draggable key={id} label={id} />)}
   </fieldset>
 }
 
